@@ -23,7 +23,9 @@ const HeroPicker = ({
     handleRerollBoth,
     rerollingIds,
     resetMatch,
-    toggleHistory
+    toggleHistory,
+    options,
+    setOptions
   }) => {
   // Use Custom Hooks
   const {
@@ -88,6 +90,8 @@ const HeroPicker = ({
               setHeroList={setHeroListText}
               roleList={roleListText}
               setRoleList={setRoleListText}
+              options={options}
+              setOptions={setOptions}
             />
             <button 
               className="start-btn"

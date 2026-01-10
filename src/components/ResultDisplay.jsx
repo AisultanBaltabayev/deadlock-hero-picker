@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, User, Shield, Dna } from 'lucide-react';
+import { LANES } from '../data/heroes';
 import './ResultDisplay.css';
 
 const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole, onRerollBoth }) => {
@@ -80,6 +81,24 @@ const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole,
                                 {item.roleChance}%
                             </span>
                         )} */}
+                        {item.lane && (
+                            <div 
+                                className="lane-badge"
+                                style={{ 
+                                    border: `1px solid ${LANES.find(l => l.name === item.lane)?.color || '#fff'}`,
+                                    color: LANES.find(l => l.name === item.lane)?.color || '#fff'
+                                }}
+                            >
+                                {item.lane}
+                            </div>
+                        )}
+                    </div>
+                )}
+                
+                {/* Challenge */}
+                {item.challenge && (
+                    <div className="challenge-text">
+                        ⚠️ {item.challenge}
                     </div>
                 )}
 

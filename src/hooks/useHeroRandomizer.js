@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DEADLOCK_HEROES } from '../data/heroes';
+import { DEADLOCK_HEROES, LANES, CHALLENGES } from '../data/heroes';
 
 const useHeroRandomizer = () => {
   // App State
@@ -25,6 +25,16 @@ const useHeroRandomizer = () => {
   const [availableHeroes, setAvailableHeroes] = useState([]);
   const [availableRoles, setAvailableRoles] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  
+  // V3 Logic State
+  const [laneDeck, setLaneDeck] = useState([]);
+  
+  // V3 Options
+  const [options, setOptions] = useState({
+    enableLanes: false,
+    enableChallenges: false,
+    enableBalanced: false
+  });
 
   // Save history on change
   useEffect(() => {
@@ -99,6 +109,29 @@ const useHeroRandomizer = () => {
     setQueue([...userList]);
     setResults([]);
     
+    // V3: Initialize Lanes
+    if (options.enableLanes) {
+        // Standard distribution for 6 players: 1-1-2-2
+        // For other counts, fill sequentially
+        let deck = [];
+        const baseLanes = LANES.map(l => l.name); // Yellow, Orange, Blue, Purple
+        
+        // Distribution logic
+        // 4 lanes. Users N.
+        // If 6 users: 2 lanes get 2, 2 lanes get 1.
+        // Let's create a pool: Y, O, B, P, Y, O (example)
+        // Better: Round robin fill.
+        for (let i = 0; i < userList.length; i++) {
+            deck.push(baseLanes[i % baseLanes.length]);
+        }
+        // Shuffle the deck
+        for (let i = deck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+        setLaneDeck(deck);
+    }
+    
     // Start
     setIsSpinning(true);
     setCurrentUser(userList[0]);
@@ -108,17 +141,54 @@ const useHeroRandomizer = () => {
     let pickedBase = selectWeightedRole(availableRoles);
     let finalRoleObj = processRoleSubtype(pickedBase);
 
+    // V3: Assign Lane & Challenge
+    let assignedLane = null;
+    if (options.enableLanes && laneDeck.length > 0) {
+        assignedLane = laneDeck[0];
+        setLaneDeck(prev => prev.slice(1));
+    }
+
+    let assignedChallenge = null;
+    if (options.enableChallenges) {
+        assignedChallenge = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
+    }
+
     // Add result
     const newResult = { 
         user: currentUser, 
         hero: pickedHero, 
         role: finalRoleObj.name, 
-        roleChance: finalRoleObj.chance 
+        roleChance: finalRoleObj.chance,
+        lane: assignedLane,
+        challenge: assignedChallenge
     };
     setResults(prev => [...prev, newResult]);
 
     // Remove hero from available (No Duplicates rule)
-    setAvailableHeroes(prev => prev.filter(h => h.name !== pickedHero.name));
+    setAvailableHeroes(prev => {
+        let nextPool = prev.filter(h => h.name !== pickedHero.name);
+
+        // V3 Balanced Logic: Rig the pool for the final players if needed
+        if (options.enableBalanced && queue.length <= 2) { 
+           // If we are down to last 1 or 2 players, check composition
+           // Current team: results + newResult
+           const currentTeam = [...results, newResult];
+           
+           // Check for frontline presence
+           const hasTank = currentTeam.some(r => r.hero.tags && (r.hero.tags.includes('Tank') || r.hero.tags.includes('Initiator')));
+           const hasSupport = currentTeam.some(r => r.hero.tags && r.hero.tags.includes('Support'));
+
+           // If missing Tank/Initiator and we are at last pick, FORCE it
+           if (!hasTank && queue.length === 2) { // 2 because queue still has current user, so len 2 means 1 left after this
+               const tanks = nextPool.filter(h => h.tags && (h.tags.includes('Tank') || h.tags.includes('Initiator')));
+               if (tanks.length > 0) return tanks;
+           }
+           
+           // If missing Support and we are at last pick (and tank is fine or prioritized)
+           // Simple logic: Prioritize Tank first.
+        }
+        return nextPool;
+    });
 
     const remainingQueue = queue.slice(1);
     setQueue(remainingQueue);
@@ -288,6 +358,8 @@ const useHeroRandomizer = () => {
     handleRerollHero,
     handleRerollRole,
     handleRerollBoth,
+    options,
+    setOptions,
     rerollingIds,
     resetMatch,
     toggleHistory,

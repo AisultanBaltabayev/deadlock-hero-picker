@@ -9,10 +9,46 @@ const InputSection = ({
   setHeroList,
   roleList,
   setRoleList,
-  isSpinning
+  isSpinning,
+  options,
+  setOptions
 }) => {
+  const handleOptionChange = (key) => (e) => {
+    setOptions(prev => ({ ...prev, [key]: e.target.checked }));
+  };
+
   return (
-    <div className="input-section-container">
+    <div className="input-root">
+      {options && setOptions && (
+      <div className="options-bar">
+        <label className="option-checkbox">
+            <input 
+                type="checkbox" 
+                checked={options.enableLanes} 
+                onChange={handleOptionChange('enableLanes')} 
+            />
+            Assign Lanes
+        </label>
+        <label className="option-checkbox">
+            <input 
+                type="checkbox" 
+                checked={options.enableChallenges} 
+                onChange={handleOptionChange('enableChallenges')} 
+            />
+            Fun Challenges
+        </label>
+        <label className="option-checkbox">
+            <input 
+                type="checkbox" 
+                checked={options.enableBalanced} 
+                onChange={handleOptionChange('enableBalanced')} 
+            />
+            Balanced Team (Force Tank/Supp)
+        </label>
+      </div>
+      )}
+
+      <div className="input-section-container">
       
       {/* Users Input */}
       <div className="input-card">
@@ -68,6 +104,7 @@ const InputSection = ({
         </div>
       </div>
 
+      </div>
     </div>
   );
 };

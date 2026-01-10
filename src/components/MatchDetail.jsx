@@ -40,6 +40,8 @@ const MatchDetail = ({ history, updateMatchStatus }) => {
                     <div className="detail-user">{result.user}</div>
                     <div className="detail-hero-name">{result.hero.name}</div>
                     <div className="detail-role">{result.role}</div>
+                    {result.lane && <div className="detail-lane" style={{ color: '#aaa', fontSize: '0.8rem' }}>{result.lane}</div>}
+                    {result.challenge && <div className="detail-challenge">⚠️ {result.challenge}</div>}
                 </div>
             </div>
         ))}
