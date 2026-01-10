@@ -73,3 +73,28 @@
   background-color: var(--color-primary);
   color: #000;
 }
+
+.history-toggle-fixed {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1000;
+    background: #121216;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.history-toggle-fixed:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    transform: scale(1.1);
+}

@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './HistorySidebar.css';
 
-const HistoryRow = ({ match, index }) => {
+const HistoryRow = ({ match, index, onClick }) => {
 //   const [showAll, setShowAll] = useState(false);
 //   const showUsersCount = showAll ? match.results.length : 3;
+  
+  const statusClass = match.status ? match.status : '';
 
   return (
-        <div key={index} className="history-item">
+        <div 
+          key={index} 
+          className={`history-item ${statusClass}`}
+          onClick={onClick}
+          style={{ cursor: 'pointer' }}
+        >
           <div className="history-meta">
             <span>{new Date(match.timestamp).toLocaleTimeString()}</span>
             <span>{match.results.length} Players</span>

@@ -1,27 +1,3 @@
-// export const DEADLOCK_HEROES = [
-//   { id: 'abrams', name: 'Abrams', image: 'https://liquipedia.net/commons/images/thumb/2/25/Deadlock_Abrams.png/600px-Deadlock_Abrams.png' },
-//   { id: 'bebop', name: 'Bebop', image: 'https://liquipedia.net/commons/images/thumb/e/e4/Deadlock_Bebop.png/600px-Deadlock_Bebop.png' },
-//   { id: 'dynamo', name: 'Dynamo', image: 'https://liquipedia.net/commons/images/thumb/8/86/Deadlock_Dynamo.png/600px-Deadlock_Dynamo.png' },
-//   { id: 'grey_talon', name: 'Grey Talon', image: 'https://liquipedia.net/commons/images/thumb/2/23/Deadlock_Grey_Talon.png/600px-Deadlock_Grey_Talon.png' },
-//   { id: 'haze', name: 'Haze', image: 'https://liquipedia.net/commons/images/thumb/7/74/Deadlock_Haze.png/600px-Deadlock_Haze.png' },
-//   { id: 'infernus', name: 'Infernus', image: 'https://liquipedia.net/commons/images/thumb/b/b5/Deadlock_Infernus.png/600px-Deadlock_Infernus.png' },
-//   { id: 'ivy', name: 'Ivy', image: 'https://liquipedia.net/commons/images/thumb/f/f6/Deadlock_Ivy.png/600px-Deadlock_Ivy.png' },
-//   { id: 'kelvin', name: 'Kelvin', image: 'https://liquipedia.net/commons/images/thumb/1/18/Deadlock_Kelvin.png/600px-Deadlock_Kelvin.png' },
-//   { id: 'lady_geist', name: 'Lady Geist', image: 'https://liquipedia.net/commons/images/thumb/c/c5/Deadlock_Lady_Geist.png/600px-Deadlock_Lady_Geist.png' },
-//   { id: 'lash', name: 'Lash', image: 'https://liquipedia.net/commons/images/thumb/1/19/Deadlock_Lash.png/600px-Deadlock_Lash.png' },
-//   { id: 'mcginnis', name: 'McGinnis', image: 'https://liquipedia.net/commons/images/thumb/9/90/Deadlock_McGinnis.png/600px-Deadlock_McGinnis.png' },
-//   { id: 'mo_and_krill', name: 'Mo & Krill', image: 'https://liquipedia.net/commons/images/thumb/4/4e/Deadlock_Mo_%26_Krill.png/600px-Deadlock_Mo_%26_Krill.png' },
-//   { id: 'paradox', name: 'Paradox', image: 'https://liquipedia.net/commons/images/thumb/5/5e/Deadlock_Paradox.png/600px-Deadlock_Paradox.png' },
-//   { id: 'pocket', name: 'Pocket', image: 'https://liquipedia.net/commons/images/thumb/c/cb/Deadlock_Pocket.png/600px-Deadlock_Pocket.png' },
-//   { id: 'seven', name: 'Seven', image: 'https://liquipedia.net/commons/images/thumb/9/97/Deadlock_Seven.png/600px-Deadlock_Seven.png' },
-//   { id: 'shiv', name: 'Shiv', image: 'https://liquipedia.net/commons/images/thumb/d/d4/Deadlock_Shiv.png/600px-Deadlock_Shiv.png' },
-//   { id: 'vindicta', name: 'Vindicta', image: 'https://liquipedia.net/commons/images/thumb/f/f7/Deadlock_Vindicta.png/600px-Deadlock_Vindicta.png' },
-//   { id: 'viscous', name: 'Viscous', image: 'https://liquipedia.net/commons/images/thumb/4/41/Deadlock_Viscous.png/600px-Deadlock_Viscous.png' },
-//   { id: 'warden', name: 'Warden', image: 'https://liquipedia.net/commons/images/thumb/8/87/Deadlock_Warden.png/600px-Deadlock_Warden.png' },
-//   { id: 'wraith', name: 'Wraith', image: 'https://liquipedia.net/commons/images/thumb/8/82/Deadlock_Wraith.png/600px-Deadlock_Wraith.png' },
-//   { id: 'yamato', name: 'Yamato', image: 'https://liquipedia.net/commons/images/thumb/4/42/Deadlock_Yamato.png/600px-Deadlock_Yamato.png' },
-//   { id: 'mirage', name: 'Mirage', image: 'https://liquipedia.net/commons/images/thumb/9/96/Deadlock_Mirage.png/600px-Deadlock_Mirage.png' }
-// ];
 export const DEADLOCK_HEROES = [
   { id: 'abrams', name: 'Abrams', image: 'https://deadlock.wiki/images/thumb/6/6d/Abrams_card.png/190px-Abrams_card.png' },
   { id: 'bebop', name: 'Bebop', image: 'https://deadlock.wiki/images/thumb/4/49/Bebop_card.png/190px-Bebop_card.png' },

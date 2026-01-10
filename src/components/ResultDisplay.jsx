@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, User, Shield, Dna } from 'lucide-react';
 import './ResultDisplay.css';
 
-const ResultDisplay = ({ results, onReroll }) => {
+const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole, onRerollBoth }) => {
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (userId, e) => {
+    e.stopPropagation();
+    setOpenDropdownId(openDropdownId === userId ? null : userId);
+  };
+
+  const handleOptionClick = (action, userId) => {
+    action(userId);
+    setOpenDropdownId(null);
+  };
+
   return (
     <div className="results-container">
       
@@ -13,58 +37,87 @@ const ResultDisplay = ({ results, onReroll }) => {
         </h3>
       )}
 
-      <div className="results-list">
-        <AnimatePresence>
-          {results.map((item) => (
-            <motion.div
-              key={item.user + (item.hero.name || item.hero)} // Use name if object
-              className="result-item"
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              {/* User Name */}
-              <div className="user-name">{item.user}</div>
-              
-              {/* Hero Info */}
-              <div className="hero-info">
-                {/* Image Thumbnail */}
-                {(item.hero.image) ? (
-                  <img 
-                    src={item.hero.image} 
-                    alt={item.hero.name} 
-                    className="hero-image"
-                  />
-                ) : (
-                  <div className="hero-placeholder">
-                    ?
-                  </div>
-                )}
-                
-                <span className="hero-name">
-                  {item.hero.name || item.hero}
-                </span>
-              </div>
+      <div className="results-list" ref={dropdownRef}>
+        <AnimatePresence mode="popLayout">
+          {results.map((item) => {
+            // If this user is currently rerolling, don't render their card (triggers exit)
+            if (rerollingIds.includes(item.user)) return null;
 
-              {/* Role Badge */}
-              {item.role && (
-                <div className="role-badge">
-                  {item.role}
-                </div>
-              )}
-
-              {/* Re-roll Button */}
-              {onReroll && (
-                <button 
-                  className="reroll-btn"
-                  onClick={() => onReroll(item.user)}
-                  title="Re-roll Hero"
+            return (
+                <motion.div
+                key={item.user + (item.hero.name || item.hero) + item.role} 
+                className="result-item"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }} // Fast exit
+                transition={{ duration: 0.3 }}
+                style={{ zIndex: openDropdownId === item.user ? 50 : 1 }}
                 >
-                  <RefreshCw size={18} />
-                </button>
-              )}
-            </motion.div>
-          ))}
+                {/* User Name */}
+                <div className="user-name">{item.user}</div>
+                
+                {/* Hero Info */}
+                <div className="hero-info">
+                    {(item.hero.image) ? (
+                    <img src={item.hero.image} alt={item.hero.name} className="hero-image"/>
+                    ) : (
+                    <div className="hero-placeholder">?</div>
+                    )}
+                    
+                    <span className="hero-name">
+                    {item.hero.name || item.hero}
+                    </span>
+                </div>
+
+                {/* Role Badge */}
+                {item.role && (
+                    <div className="role-badge-container">
+                        <div className="role-badge">
+                            {item.role}
+                        </div>
+                        {/* {item.roleChance && (
+                            <span className="role-chance">
+                                {item.roleChance}%
+                            </span>
+                        )} */}
+                    </div>
+                )}
+
+                {/* Action Menu */}
+                <div className="result-actions">
+                    <div className="dropdown-container">
+                        <button 
+                            className={`reroll-menu-btn ${openDropdownId === item.user ? 'active' : ''}`}
+                            onClick={(e) => toggleDropdown(item.user, e)}
+                            title="Reroll Options"
+                        >
+                            <RefreshCw size={18} />
+                        </button>
+                        
+                        {openDropdownId === item.user && (
+                            <div className="dropdown-menu">
+                                {onRerollHero && (
+                                    <button onClick={() => handleOptionClick(onRerollHero, item.user)}>
+                                        <User size={14} /> Reroll Hero
+                                    </button>
+                                )}
+                                {onRerollRole && (
+                                    <button onClick={() => handleOptionClick(onRerollRole, item.user)}>
+                                        <Shield size={14} /> Reroll Role
+                                    </button>
+                                )}
+                                {onRerollBoth && (
+                                    <button onClick={() => handleOptionClick(onRerollBoth, item.user)}>
+                                        <Dna size={14} /> Reroll Both
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+                </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
     </div>

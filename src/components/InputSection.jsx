@@ -60,7 +60,7 @@ const InputSection = ({
           className="input-textarea"
           value={roleList}
           onChange={(e) => setRoleList(e.target.value)}
-          placeholder="Enter play styles...&#10;Core&#10;Support&#10;Tank"
+          placeholder="Enter play styles...&#10;Core&#10;Support"
           disabled={isSpinning}
         />
         <div className="input-counter">
