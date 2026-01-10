@@ -1,0 +1,131 @@
+:root {
+  font-family: 'Crimson Text', 'Times New Roman', serif; /* Serif for that occult/vintage feel */
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  --color-bg: #0f0f13;
+  --color-surface: #1a1a20;
+  --color-surface-hover: #25252e;
+  --color-primary: #e6b000; /* Deadlock Amber */
+  --color-primary-glow: rgba(230, 176, 0, 0.4);
+  --color-secondary: #00b4d8; /* Neon Blue */
+  --color-text: #e8e6d9; /* Slightly varying cream */
+  --color-text-dim: #a0a0a0;
+  --color-border: #444444;
+  
+  --shadow-glow: 0 0 20px var(--color-primary-glow);
+  --radius-md: 4px; /* Sharper corners for games usually */
+  --radius-lg: 8px;
+
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 10%, #1e1e26 0%, #050508 90%);
+  background-attachment: fixed;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1.deadlock-title {
+  font-size: 4.5em; /* Bigger */
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 0 5px rgba(230, 176, 0, 0.5);
+  margin-bottom: 2rem;
+  letter-spacing: -2px;
+  font-weight: 400; /* Serif usually looks better lighter at display size */
+}
+
+button {
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif; /* Keep UI text legible */
+  background-color: rgba(26, 26, 32, 0.8);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+input, textarea {
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  padding: 0.8em;
+  font-size: 1em;
+  font-family: 'Inter', sans-serif;
+  background-color: rgba(10, 10, 14, 0.6);
+  color: var(--color-text);
+  transition: border-color 0.25s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: rgba(10, 10, 14, 0.9);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

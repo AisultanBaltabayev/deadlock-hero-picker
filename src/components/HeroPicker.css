@@ -1,0 +1,75 @@
+.hero-picker-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-content {
+  flex: 1;
+  transition: margin-right 0.3s ease;
+}
+
+.toolbar {
+  margin-bottom: 1rem;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.toolbar-btn {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-dim);
+}
+
+.toolbar-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.start-btn {
+  font-size: 1.5rem;
+  padding: 1.2rem 4rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 2rem auto;
+  display: block;
+  background: var(--color-primary);
+  color: #000;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-family: 'Crimson Text', serif;
+  text-transform: uppercase;
+  border: none;
+  box-shadow: 0 0 15px var(--color-primary-glow);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  transition: all 0.2s ease;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px var(--color-primary-glow);
+  background: #ffc400; /* Brighter amber */
+}
+
+.start-btn:active {
+  transform: translateY(1px);
+}
+
+.new-match-btn {
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  padding: 0.8rem 2rem;
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.new-match-btn:hover {
+  background-color: var(--color-primary);
+  color: #000;
+}
