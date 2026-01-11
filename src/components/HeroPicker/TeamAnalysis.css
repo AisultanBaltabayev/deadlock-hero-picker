@@ -1,0 +1,120 @@
+.team-analysis-box {
+    margin-top: 2rem;
+    background: rgba(10, 10, 14, 0.4);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.analysis-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.analysis-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--color-primary);
+}
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.analysis-section h4 {
+    margin: 0 0 0.8rem 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.analysis-section ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.analysis-section li {
+    margin-bottom: 0.4rem;
+}
+
+.analysis-section p {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.analysis-section.synergy h4 { color: #3498db; }
+.analysis-section.weakness h4 { color: #e74c3c; }
+
+.dim { color: #666; font-style: italic; }
+.success { color: #2ecc71; }
+
+.role-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.role-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+.damage-meters {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.damage-meter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.type-label {
+    width: 60px;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.meter-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

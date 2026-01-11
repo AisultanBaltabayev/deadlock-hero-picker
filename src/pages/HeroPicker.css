@@ -7,7 +7,6 @@
 
 .main-content {
   flex: 1;
-  transition: margin-right 0.3s ease;
 }
 
 .toolbar {
@@ -74,27 +73,55 @@
   color: #000;
 }
 
-.history-toggle-fixed {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    z-index: 1000;
-    background: #121216;
-    border: 1px solid var(--color-border);
-    color: var(--color-text);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+/* Strategy & Scouting Sections */
+.strategy-section {
+    width: 100%;
+    margin-top: 3rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    flex-direction: column;
+    gap: 2rem;
 }
 
-.history-toggle-fixed:hover {
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-    transform: scale(1.1);
+.enemy-scouting {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px dashed rgba(231, 76, 60, 0.3);
+}
+
+.enemy-scouting h3 {
+    margin: 0 0 0.5rem 0;
+    color: #e74c3c;
+    letter-spacing: 2px;
+}
+
+.dim-text {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.counter-tips {
+    margin-top: 2rem;
+    background: rgba(46, 204, 113, 0.05);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.counter-tips h4 {
+    margin: 0 0 0.8rem 0;
+    color: #2ecc71;
+    font-size: 1rem;
+}
+
+.counter-tips ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.counter-tips li {
+    margin-bottom: 0.4rem;
 }

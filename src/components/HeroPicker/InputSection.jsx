@@ -14,6 +14,7 @@ const InputSection = ({
   setOptions
 }) => {
   const handleOptionChange = (key) => (e) => {
+    console.log(key, e.target.checked);
     setOptions(prev => ({ ...prev, [key]: e.target.checked }));
   };
 

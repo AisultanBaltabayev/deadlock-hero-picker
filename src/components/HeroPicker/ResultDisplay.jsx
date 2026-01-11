@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, User, Shield, Dna } from 'lucide-react';
-import { LANES } from '../data/heroes';
+import { LANES } from '../../data/heroes';
 import './ResultDisplay.css';
 
-const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole, onRerollBoth }) => {
+const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole, onRerollBoth, onRemoveManual }) => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const dropdownRef = useRef(null);
 
@@ -128,6 +128,14 @@ const ResultDisplay = ({ results, rerollingIds = [], onRerollHero, onRerollRole,
                                 {onRerollBoth && (
                                     <button onClick={() => handleOptionClick(onRerollBoth, item.user)}>
                                         <Dna size={14} /> Reroll Both
+                                    </button>
+                                )}
+                                {item.isManual && onRemoveManual && (
+                                    <button 
+                                        onClick={() => onRemoveManual(item.manualId)}
+                                        className="remove-btn"
+                                    >
+                                        <Trash2 size={14} /> Remove Player
                                     </button>
                                 )}
                             </div>

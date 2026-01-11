@@ -1,18 +1,22 @@
 import React from 'react';
-import { History as HistoryIcon } from 'lucide-react';
-import InputSection from './InputSection';
-import SpinnerWheel from './SpinnerWheel';
-import ResultDisplay from './ResultDisplay';
-import HistorySidebar from './HistorySidebar';
+import InputSection from '../components/HeroPicker/InputSection';
+import SpinnerWheel from '../components/HeroPicker/SpinnerWheel';
+import ResultDisplay from '../components/HeroPicker/ResultDisplay';
+import TeamAnalysis from '../components/HeroPicker/TeamAnalysis';
+import EnemyPicker from '../components/HeroPicker/EnemyPicker';
+import LaneStrategy from '../components/HeroPicker/LaneStrategy';
+import BuildRoulette from '../components/HeroPicker/BuildRoulette';
+import StrategyBoard from '../components/HeroPicker/StrategyBoard';
+import MiniGames from '../components/HeroPicker/MiniGames';
+import TeamFiller from '../components/HeroPicker/TeamFiller';
 import { DEADLOCK_HEROES } from '../data/heroes';
 import './HeroPicker.css';
 import useInputManagement from '../hooks/useInputManagement';
+import useTeamAnalysis from '../hooks/useTeamAnalysis';
 // import useHeroRandomizer from '../hooks/useHeroRandomizer'; // Lifted to App
 
 const HeroPicker = ({
     isSpinning,
-    showHistory,
-    history,
     results,
     currentUser,
     availableHeroes,
@@ -23,9 +27,12 @@ const HeroPicker = ({
     handleRerollBoth,
     rerollingIds,
     resetMatch,
-    toggleHistory,
     options,
-    setOptions
+    setOptions,
+    enemyTeam,
+    setEnemyTeam,
+    addManualResult,
+    removeManualResult
   }) => {
   // Use Custom Hooks
   const {
@@ -36,6 +43,8 @@ const HeroPicker = ({
     prefillHeroes,
     prefillRoles
   } = useInputManagement();
+
+  const analysis = useTeamAnalysis(results, enemyTeam);
 
   // Logic hook lifted to App.jsx defined via props now
 
@@ -48,27 +57,11 @@ const HeroPicker = ({
 
   return (
     <div className="hero-picker-container">
-      
-      {!showHistory && (
-        <div 
-            className="history-toggle-fixed" 
-            onClick={toggleHistory}
-            title="Show History"
-        >
-            <HistoryIcon size={24} />
-        </div>
-      )}
-
-      {showHistory && <HistorySidebar history={history} onClose={toggleHistory} />}
-
-      <div className="main-content" style={{ marginRight: showHistory ? '300px' : '0' }}>
+      <div className="main-content">
         
         {!isSpinning && results.length === 0 && (
           <React.Fragment>
             <div className="toolbar">
-               <button className="toolbar-btn" onClick={toggleHistory}>
-                 {showHistory ? 'Hide History' : 'Show History'}
-               </button>
                <button 
                 className="toolbar-btn"
                 onClick={prefillHeroes}
@@ -120,17 +113,56 @@ const HeroPicker = ({
               onRerollHero={!isSpinning ? handleRerollHero : null}
               onRerollRole={!isSpinning ? handleRerollRole : null}
               onRerollBoth={!isSpinning ? handleRerollBoth : null}
+              onRemoveManual={!isSpinning ? removeManualResult : null}
             />
           </div>
         )}
 
         {!isSpinning && results.length > 0 && (
-          <button 
-            className="new-match-btn"
-            onClick={resetMatch}
-          >
-            NEW MATCH
-          </button>
+          <div className="strategy-section">
+            
+            {results.length < 6 && (
+                <TeamFiller 
+                    availableHeroes={availableHeroes} 
+                    onAddHero={addManualResult} 
+                    remainingSlots={6 - results.length} 
+                />
+            )}
+            
+            <TeamAnalysis analysis={analysis} />
+
+            <BuildRoulette results={results} />
+            
+            {enemyTeam.length > 0 && (
+                <div className="enemy-dependent-strategy">
+                    <LaneStrategy suggestedLanes={analysis?.suggestedLanes} />
+                    <StrategyBoard strategyBoardTips={analysis?.strategyBoardTips} />
+                </div>
+            )}
+            
+            <MiniGames results={results} />
+            <div className="enemy-scouting">
+                <h3>Enemy Scouting</h3>
+                <p className="dim-text">Select heroes the enemy team picked to see counter-picks and balance tips.</p>
+                <EnemyPicker enemyTeam={enemyTeam} setEnemyTeam={setEnemyTeam} />
+                
+                {(analysis?.counterSuggestions || []).length > 0 && (
+                    <div className="counter-tips">
+                        <h4>Counter-Picking Tips</h4>
+                        <ul>
+                            {analysis.counterSuggestions.map((tip, i) => <li key={i}>{tip}</li>)}
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            <button 
+                className="new-match-btn"
+                onClick={resetMatch}
+            >
+                NEW MATCH
+            </button>
+          </div>
         )}
       </div>
     </div>

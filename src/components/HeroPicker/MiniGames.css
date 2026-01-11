@@ -1,0 +1,116 @@
+.mini-games-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(10, 10, 14, 0.4);
+    border: 1px solid rgba(155, 89, 182, 0.2);
+    border-radius: 8px;
+}
+
+.games-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.games-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #9b59b6;
+    letter-spacing: 1px;
+}
+
+.points-badge {
+    margin-left: auto;
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.game-card {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.game-card h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: #ccc;
+    text-transform: uppercase;
+}
+
+.game-btn {
+    width: 100%;
+    background: rgba(155, 89, 182, 0.1);
+    border: 1px solid #9b59b6;
+    color: #9b59b6;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.game-btn:hover {
+    background: #9b59b6;
+    color: #000;
+}
+
+.trivia-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.opt-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.opt-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+.prediction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.predict-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.predict-row select {
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+}

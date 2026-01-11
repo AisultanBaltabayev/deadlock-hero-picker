@@ -1,0 +1,99 @@
+.lane-strategy-box {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.strategy-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.strategy-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.lanes-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.lane-assignment-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.8rem;
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+}
+
+.lane-badge {
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.assignment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.player-ref {
+    font-size: 0.85rem;
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.hero-ref {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.lane-advice {
+    font-size: 0.75rem;
+    color: #999;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+.priority-tag {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.65rem;
+    color: #f1c40f;
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+.strategy-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hint {
+    font-size: 0.7rem;
+    color: #666;
+    font-style: italic;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .lanes-layout {
+        grid-template-columns: 1fr;
+    }
+}

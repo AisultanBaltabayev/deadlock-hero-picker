@@ -4,11 +4,11 @@ import { DEADLOCK_HEROES, LANES, CHALLENGES } from '../data/heroes';
 const useHeroRandomizer = () => {
   // App State
   const [isSpinning, setIsSpinning] = useState(false);
-  const [showHistory, setShowHistory] = useState(true);
   
   // Logic State
   const [queue, setQueue] = useState([]);
   const [results, setResults] = useState([]);
+  const [enemyTeam, setEnemyTeam] = useState([]);
   const [history, setHistory] = useState(() => {
     const saved = localStorage.getItem('deadlock_picker_history');
     if (saved) {
@@ -114,7 +114,7 @@ const useHeroRandomizer = () => {
         // Standard distribution for 6 players: 1-1-2-2
         // For other counts, fill sequentially
         let deck = [];
-        const baseLanes = LANES.map(l => l.name); // Yellow, Orange, Blue, Purple
+        const baseLanes = LANES.map(l => l.name); // Yellow, Blue, Purple
         
         // Distribution logic
         // 4 lanes. Users N.
@@ -166,7 +166,7 @@ const useHeroRandomizer = () => {
 
     // Remove hero from available (No Duplicates rule)
     setAvailableHeroes(prev => {
-        let nextPool = prev.filter(h => h.name !== pickedHero.name);
+        let nextPool = prev.filter(h => h && h.name !== pickedHero?.name);
 
         // V3 Balanced Logic: Rig the pool for the final players if needed
         if (options.enableBalanced && queue.length <= 2) { 
@@ -175,12 +175,11 @@ const useHeroRandomizer = () => {
            const currentTeam = [...results, newResult];
            
            // Check for frontline presence
-           const hasTank = currentTeam.some(r => r.hero.tags && (r.hero.tags.includes('Tank') || r.hero.tags.includes('Initiator')));
-           const hasSupport = currentTeam.some(r => r.hero.tags && r.hero.tags.includes('Support'));
+           const hasTank = currentTeam.some(r => r.hero?.tags && (r.hero.tags.includes('Tank') || r.hero.tags.includes('Initiator')));
 
            // If missing Tank/Initiator and we are at last pick, FORCE it
            if (!hasTank && queue.length === 2) { // 2 because queue still has current user, so len 2 means 1 left after this
-               const tanks = nextPool.filter(h => h.tags && (h.tags.includes('Tank') || h.tags.includes('Initiator')));
+               const tanks = nextPool.filter(h => h && h.tags && (h.tags.includes('Tank') || h.tags.includes('Initiator')));
                if (tanks.length > 0) return tanks;
            }
            
@@ -327,14 +326,66 @@ const useHeroRandomizer = () => {
     }, 600);
   };
 
+  const addManualResult = (hero) => {
+    if (results.length >= 6) return;
+    
+    // Create a deterministic unique ID for manual players to avoid key collisions
+    const manualUser = `Player ${results.length + 1} (Manual)`;
+
+    const newResult = {
+      user: manualUser,
+      hero: hero,
+      role: "Manual Pick",
+      roleChance: 100,
+      lane: null,
+      challenge: null,
+      isManual: true,
+      manualId: Date.now() // Unique ID for removal
+    };
+    
+    setResults(prev => {
+        const updatable = [...prev, newResult];
+        setHistory(prevHist => {
+            if (prevHist.length === 0) return prevHist;
+            const newHistory = [...prevHist];
+            newHistory[0] = { ...newHistory[0], results: updatable };
+            return newHistory;
+        });
+        return updatable;
+    });
+
+    setAvailableHeroes(prev => prev.filter(h => h && h.name !== hero.name));
+  };
+
+  const removeManualResult = (manualId) => {
+    const toRemove = results.find(r => r.manualId === manualId);
+    if (!toRemove) return;
+
+    setResults(prev => {
+        const filtered = prev.filter(r => r.manualId !== manualId);
+        
+        // Return hero to pool
+        setAvailableHeroes(pool => {
+            const alreadyIn = pool.some(h => h && h.name === toRemove.hero.name);
+            if (alreadyIn) return pool;
+            return [...pool, toRemove.hero].sort((a, b) => a.name.localeCompare(b.name));
+        });
+
+        // Sync history
+        setHistory(prevHist => {
+            if (prevHist.length === 0) return prevHist;
+            const newHistory = [...prevHist];
+            newHistory[0] = { ...newHistory[0], results: filtered };
+            return newHistory;
+        });
+
+        return filtered;
+    });
+  };
+
   const resetMatch = () => {
     setResults([]);
   };
-
-  const toggleHistory = () => {
-    setShowHistory(!showHistory);
-  };
-
 
   const updateMatchStatus = (timestamp, status) => {
     setHistory(prev => prev.map(match => 
@@ -348,7 +399,6 @@ const useHeroRandomizer = () => {
 
   return {
     isSpinning,
-    showHistory,
     history,
     results,
     currentUser,
@@ -362,9 +412,12 @@ const useHeroRandomizer = () => {
     setOptions,
     rerollingIds,
     resetMatch,
-    toggleHistory,
     updateMatchStatus,
-    getMatchById
+    getMatchById,
+    enemyTeam,
+    setEnemyTeam,
+    addManualResult,
+    removeManualResult
   };
 };
 

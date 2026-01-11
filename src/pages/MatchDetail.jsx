@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useHeroRandomizer from '../hooks/useHeroRandomizer';
+// import useHeroRandomizer from '../hooks/useHeroRandomizer';
 import { ArrowLeft, Trophy, XCircle } from 'lucide-react';
 import './MatchDetail.css';
 
@@ -23,7 +23,7 @@ const MatchDetail = ({ history, updateMatchStatus }) => {
   return (
     <div className="match-detail-container">
       <div className="detail-header">
-        <button onClick={() => navigate('/')} className="back-btn">
+        <button onClick={() => navigate('/history')} className="back-btn">
             <ArrowLeft /> Back
         </button>
         <h2>Match Details</h2>
