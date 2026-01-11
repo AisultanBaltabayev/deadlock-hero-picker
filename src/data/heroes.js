@@ -224,6 +224,69 @@ export const DEADLOCK_HEROES = [
     counters: ['Abrams', 'Shiv', 'McGinnis'],
     synergies: ['Kelvin', 'Dynamo', 'Ivy']
   },
+  { 
+    id: 'doorman', name: 'The Doorman', 
+    image: 'https://deadlock.wiki/images/thumb/6/6f/The_Doorman_card.png/190px-The_Doorman_card.png', 
+    tags: ['Control', 'Spirit', 'Utility'],
+    damageType: 'Spirit',
+    difficulty: 3,
+    counters: ['Lash', 'Wraith', 'Haze'],
+    synergies: ['Dynamo', 'Ivy', 'Kelvin']
+  },
+  { 
+    id: 'mina', name: 'Mina', 
+    image: 'https://deadlock.wiki/images/thumb/a/a5/Mina_card.png/190px-Mina_card.png', 
+    tags: ['Assassin', 'Burst', 'Spirit'],
+    damageType: 'Spirit',
+    difficulty: 3,
+    counters: ['Abrams', 'Viscous', 'Billy'],
+    synergies: ['Dynamo', 'Ivy', 'Warden']
+  },
+  { 
+    id: 'victor', name: 'Victor', 
+    image: 'https://deadlock.wiki/images/thumb/3/3d/Victor_card.png/190px-Victor_card.png', 
+    tags: ['Tank', 'Brawler', 'Sustain'],
+    damageType: 'Spirit',
+    difficulty: 1,
+    counters: ['Grey Talon', 'Vindicta', 'Paige'],
+    synergies: ['Kelvin', 'Ivy', 'Dynamo']
+  },
+  { 
+    id: 'paige', name: 'Paige', 
+    image: 'https://deadlock.wiki/images/thumb/b/b0/Paige_card.png/190px-Paige_card.png', 
+    tags: ['Support', 'Utility', 'Healer'],
+    damageType: 'Spirit',
+    difficulty: 2,
+    counters: ['Lash', 'Haze', 'Mina'],
+    synergies: ['Abrams', 'Seven', 'Victor']
+  },
+  { 
+    id: 'drifter', name: 'Drifter', 
+    image: 'https://deadlock.wiki/images/thumb/4/4d/Drifter_card.png/190px-Drifter_card.png', 
+    tags: ['Assassin', 'Mobility', 'Burst'],
+    damageType: 'Weapon',
+    difficulty: 2,
+    counters: ['Abrams', 'Viscous', 'Victor'],
+    synergies: ['Lash', 'Ivy', 'Viscous']
+  },
+  { 
+    id: 'billy', name: 'Billy', 
+    image: 'https://deadlock.wiki/images/thumb/e/e5/Billy_card.png/190px-Billy_card.png', 
+    tags: ['Tank', 'Control', 'Melee'],
+    damageType: 'Spirit',
+    difficulty: 2,
+    counters: ['Grey Talon', 'Vindicta', 'Drifter'],
+    synergies: ['Seven', 'Dynamo', 'Lady Geist']
+  },
+  { 
+    id: 'sinclair', name: 'Sinclair', 
+    image: 'https://deadlock.wiki/images/thumb/4/41/Sinclair_card.png/190px-Sinclair_card.png', 
+    tags: ['Control', 'Spirit', 'Utility', 'Mobility'],
+    damageType: 'Spirit',
+    difficulty: 3,
+    counters: ['Abrams', 'Shiv', 'Kelvin'],
+    synergies: ['Ivy', 'Dynamo', 'Lady Geist']
+  },
 ];
 
 export const LANES = [
